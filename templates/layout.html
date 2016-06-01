@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+  <head>
+<title>PyT Demo - finding Flask vulnerabilities</title>
+</head>
+<body>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+  <link href="/static/center.css" rel="stylesheet"/>
+<div class="page">
+  <h1>PyT Demo - finding Flask vulnerabilities</h1>
+  {% for message in get_flashed_messages() %}
+    <div class=flash>{{ message }}</div>
+  {% endfor %}
+    {% block body %}{% endblock %}
+
+</div>
+</body>
+</html>
