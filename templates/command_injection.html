@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>Shared grocery list</h2>
+<form method= "POST">
+  {{ form.hidden_tag() }}
+  <div>{{ form.grocery_name }} {{ form.add_grocery }}</div>
+  <div> {{ form.reset_groceries }}</div>
+  {{ form.submit }}
+</form>
+
+{% for item in groceries%}
+<div> {{ item }} </div>
+{% endfor %}
+
+{% endblock %}
