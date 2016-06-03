@@ -1,4 +1,4 @@
-from flask import render_template, Flask
+from flask import render_template, Flask, request, make_response
 from command_injection import Grocery, save_grocery, reset_groceries, get_groceries
 
 app = Flask(__name__)
@@ -9,6 +9,18 @@ app.config['SECRET_KEY'] = 'secret'
 @app.route('/overview')
 def index():
     return render_template('overview.html')
+
+@app.route('/xss', methods=['GET'])
+def xss():
+    param = request.args.get('param', 'not set')
+
+    html = open('templates/xss.html').read()
+    response = make_response(html.replace('{{ param }}', param))
+    return response
+
+@app.route('/danger')
+def danger():
+    return render_template('danger.html')
 
 @app.route('/command_injection', methods=['GET', 'POST'])
 def command_injection():

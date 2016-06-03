@@ -1,4 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
-<a href="/command_injection">Command injection example</a>
+<div><a href="/command_injection">Command injection example</a></div>
+<div><a href="/xss?param=message">XSS</a></div>
+<div><a href="/xss?param=
+&lt;meta http-equiv=&quot;refresh&quot; content=&quot;0; url=/danger&quot;&gt;
+	">XSS faulty param</a></div>
 {% endblock %}
