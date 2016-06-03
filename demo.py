@@ -50,11 +50,8 @@ def sql_injection_filtering():
 @app.route('/path_traversal', methods=['GET'])
 def path_traversal():
     image_name = request.args.get('image_name')
-    print(image_name)
-    print('s', os.path.join(os.getcwd(), image_name))
     if not image_name:
         return 404
-    print('s', os.path.join(os.getcwd(), image_name))
     return send_file(os.path.join(os.getcwd(), image_name))
 
 @app.route('/xss', methods=['GET'])
