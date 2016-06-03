@@ -52,7 +52,8 @@ def path_traversal():
     image_name = request.args.get('image_name')
     if not image_name:
         return 404
-    return send_file(os.path.join(os.getcwd(), image_name))
+    else:
+        return send_file(os.path.join(os.getcwd(), image_name))
 
 @app.route('/xss', methods=['GET'])
 def xss():
