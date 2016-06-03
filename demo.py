@@ -1,4 +1,4 @@
-from flask import render_template, Flask, request, make_response, send_file
+from flask import render_template, Flask, request, make_response, send_file, Markup
 import os
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
@@ -60,6 +60,16 @@ def path_traversal():
 @app.route('/xss', methods=['GET'])
 def xss():
     param = request.args.get('param', 'not set')
+
+    html = open('templates/xss.html').read()
+    response = make_response(html.replace('{{ param }}', param))
+    return response
+
+@app.route('/xss_sanitised', methods=['GET'])
+def xss_sanitised():
+    param = request.args.get('param', 'not set')
+
+    param = Markup.escape(param)
 
     html = open('templates/xss.html').read()
     response = make_response(html.replace('{{ param }}', param))

@@ -5,6 +5,9 @@
 <div><a href="/xss?param=
 &lt;meta http-equiv=&quot;refresh&quot; content=&quot;0; url=/danger&quot;&gt;
 ">XSS faulty param</a></div>
+<div><a href="/xss_sanitised?param=
+&lt;meta http-equiv=&quot;refresh&quot; content=&quot;0; url=/danger&quot;&gt;
+">XSS sanitised</a></div>
 <div><a href="/path_traversal?image_name=cat.jpg">Path Traversal</a></div>
 <div><a href="/sql_injection_raw?param=select * from user">SQL injection 1</a></div>
 <div><a href='/sql_injection_filtering?param="Peter"'>SQL injection 2</a></div>
