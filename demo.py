@@ -1,4 +1,5 @@
-from flask import render_template, Flask, request, make_response
+from flask import render_template, Flask, request, make_response, send_file
+import os
 from command_injection import Grocery, save_grocery, reset_groceries, get_groceries
 
 app = Flask(__name__)
@@ -9,6 +10,16 @@ app.config['SECRET_KEY'] = 'secret'
 @app.route('/overview')
 def index():
     return render_template('overview.html')
+
+@app.route('/path_traversal', methods=['GET'])
+def path_traversal():
+    image_name = request.args.get('image_name')
+    print(image_name)
+    print('s', os.path.join(os.getcwd(), image_name))
+    if not image_name:
+        return 404
+    print('s', os.path.join(os.getcwd(), image_name))
+    return send_file(os.path.join(os.getcwd(), image_name))
 
 @app.route('/xss', methods=['GET'])
 def xss():
