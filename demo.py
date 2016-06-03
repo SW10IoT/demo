@@ -1,15 +1,51 @@
 from flask import render_template, Flask, request, make_response, send_file
 import os
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import sessionmaker
+import sys
+
 from command_injection import Grocery, save_grocery, reset_groceries, get_groceries
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+db = SQLAlchemy(app)
+
+class User(db.Model):
+    _id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True)
+    password = db.Column(db.String(80), unique=True)
+    email = db.Column(db.String(120), unique=True)
+
+    def __init__(self, username, password, email):
+        self.username = username
+        self.password = password
+        self.email = email
+
+    def __repr__(self):
+        return '<User %r>' % self.username
 
 
 @app.route('/')
 @app.route('/overview')
 def index():
     return render_template('overview.html')
+
+@app.route('/sql_injection_raw')
+def sql_injection_raw():
+    param = request.args.get('param', 'not set')
+    result = db.engine.execute(param)
+    return render_template('sql_injection.html', result=result)
+
+@app.route('/sql_injection_filtering')
+def sql_injection_filtering():
+    param = request.args.get('param', 'not set')
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    result = session.query(User).filter("username={}".format(param))
+    return render_template('sql_injection.html', result=result)
 
 @app.route('/path_traversal', methods=['GET'])
 def path_traversal():

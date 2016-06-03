@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block body %}
+
+{% for item in result%}
+<div> {{ item.username }} </div>
+<div> {{ item.email }} </div>
+<div> {{ item.password }} </div>
+{% endfor %}
+
+{% endblock %}
